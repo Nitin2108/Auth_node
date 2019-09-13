@@ -10,7 +10,7 @@ if (!config.get("myprivatekey")) {
   console.error("FATAL ERROR: myprivatekey is not defined.");
   process.exit(1);
 }
-
+app.use(express.static(__dirname+'/dist/regform'));
 //connect to mongodb
 mongoose
   .connect("mongodb://localhost/nodejsauth", { useNewUrlParser: true })
@@ -22,5 +22,8 @@ app.use(express.json());
 //use users route for api/users
 app.use("/api/users", usersRoute);
 
+app.get('/', function (req,res){
+res.sendFile('index.html');
+});
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
